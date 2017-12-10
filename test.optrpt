@@ -1,0 +1,56 @@
+
+    Report from: Interprocedural optimizations [ipo]
+
+  WHOLE PROGRAM (SAFE) [EITHER METHOD]: false
+  WHOLE PROGRAM (SEEN) [TABLE METHOD]: false
+  WHOLE PROGRAM (READ) [OBJECT READER METHOD]: false
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 30
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: disabled
+  -inline-max-per-compile: disabled
+
+In the inlining report below:
+   "sz" refers to the "size" of the routine. The smaller a routine's size,
+      the more likely it is to be inlined.
+   "isz" refers to the "inlined size" of the routine. This is the amount
+      the calling routine will grow if the called routine is inlined into it.
+      The compiler generally limits the amount a routine can grow by having
+      routines inlined into it.
+
+Begin optimization report for: main(int, char *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (main(int, char *)) [1/2=50.0%] test.cpp(25,1)
+  -> EXTERN: (28,2) time(time_t *)
+  -> INLINE: (29,17) get_time(time_t) (isz = 39) (sz = 46)
+    -> EXTERN: (9,15) ctime(const time_t *)
+    -> EXTERN: (13,19) time(time_t *)
+    -> EXTERN: (14,8) ctime(const time_t *)
+    -> EXTERN: (15,8) strlen(const char *)
+    -> EXTERN: (17,3) fprintf(FILE *, const char *, ...)
+    -> EXTERN: (19,2) memcpy(void *, const void *, size_t)
+  -> EXTERN: (32,2) memcpy(void *, const void *, size_t)
+  -> EXTERN: (32,28) strlen(const char *)
+  -> EXTERN: (33,2) fprintf(FILE *, const char *, ...)
+  -> EXTERN: (33,42) strlen(const char *)
+
+
+    Report from: Code generation optimizations [cg]
+
+test.cpp(19,2):remark #34014: optimization advice for memcpy: increase the source's alignment to 16 (and use __assume_aligned) to increase the width of loads
+test.cpp(19,2):remark #34000: call to memcpy implemented inline with loads and stores with proven source (alignment, offset): (1, 0), and destination (alignment, offset): (16, 0)
+test.cpp(32,2):remark #34026: call to memcpy implemented as a call to optimized library version
+===========================================================================
+
+Begin optimization report for: get_time(time_t)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (get_time(time_t)) test.cpp(7,1)
+
+===========================================================================

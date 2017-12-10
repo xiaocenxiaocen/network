@@ -1,0 +1,123 @@
+
+    Report from: Interprocedural optimizations [ipo]
+
+  WHOLE PROGRAM (SAFE) [EITHER METHOD]: false
+  WHOLE PROGRAM (SEEN) [TABLE METHOD]: false
+  WHOLE PROGRAM (READ) [OBJECT READER METHOD]: false
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 30
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: disabled
+  -inline-max-per-compile: disabled
+
+In the inlining report below:
+   "sz" refers to the "size" of the routine. The smaller a routine's size,
+      the more likely it is to be inlined.
+   "isz" refers to the "inlined size" of the routine. This is the amount
+      the calling routine will grow if the called routine is inlined into it.
+      The compiler generally limits the amount a routine can grow by having
+      routines inlined into it.
+
+Begin optimization report for: main(int, char **)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (main(int, char **)) [1/5=20.0%] server.cpp(66,1)
+  -> EXTERN: (68,3) fprintf(FILE *, const char *, ...)
+  -> INLINE (MANUAL): (72,13) atoi(const char *) (isz = 8) (sz = 15)
+    -> INLINE (MANUAL): /usr/include/stdlib.h:(404,16) strtol(const char *, char **, int) (isz = 3) (sz = 14)
+      -> EXTERN: (336,10) __strtol_internal(const char *, char **, int, int)
+  -> INLINE: (73,17) open_listenfd(int) (isz = 54) (sz = 64)
+    -> EXTERN: (26,18) socket(int, int, int)
+    -> EXTERN: (37,2) bzero(void *, size_t)
+    -> EXTERN: (39,31) __builtin_constant_p(...)
+    -> EXTERN: (40,24) __builtin_constant_p(...)
+    -> EXTERN: (41,6) bind(int, const sockaddr *, socklen_t)
+    -> EXTERN: (45,6) listen(int, int)
+  -> EXTERN: (74,3) fprintf(FILE *, const char *, ...)
+  -> EXTERN: (84,12) accept(int, sockaddr *, socklen_t *)
+  -> EXTERN: (87,8) gethostbyaddr(const void *, __socklen_t, int)
+  -> EXTERN: (89,12) inet_ntoa(in_addr)
+  -> EXTERN: (90,3) fprintf(FILE *, const char *, ...)
+  -> EXTERN: (91,3) fflush(FILE *)
+  -> INLINE: (93,3) echo(int) (isz = 44) (sz = 49)
+    -> EXTERN: (58,2) Rio_readinitb(rio_t *, int)
+    -> EXTERN: (59,13) Rio_readlineb(rio_t *, void *, size_t)
+    -> EXTERN: (59,13) Rio_readlineb(rio_t *, void *, size_t)
+    -> EXTERN: (60,3) fprintf(FILE *, const char *, ...)
+    -> EXTERN: (61,3) Rio_written(int, void *, size_t)
+  -> EXTERN: (94,3) close(int)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at server.cpp(81,2)
+   remark #15521: loop was not vectorized: explicitly compute the iteration count before executing the loop or try using canonical loop form
+
+   LOOP BEGIN at server.cpp(59,2) inlined into server.cpp(93,3)
+      remark #15521: loop was not vectorized: explicitly compute the iteration count before executing the loop or try using canonical loop form
+   LOOP END
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+server.cpp(37,2):remark #34000: call to bzero implemented inline with stores with proven (alignment, offset): (16, 0)
+===========================================================================
+
+Begin optimization report for: strtol(const char *, char **, int)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (strtol(const char *, char **, int)) /usr/include/stdlib.h(335,1)
+
+===========================================================================
+
+Begin optimization report for: atoi(const char *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (atoi(const char *)) /usr/include/stdlib.h(403,1)
+
+===========================================================================
+
+Begin optimization report for: open_listenfd(int)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (open_listenfd(int)) [4/5=80.0%] server.cpp(21,1)
+  -> EXTERN: (26,18) socket(int, int, int)
+  -> EXTERN: (37,2) bzero(void *, size_t)
+  -> EXTERN: (39,31) __builtin_constant_p(...)
+  -> EXTERN: (40,24) __builtin_constant_p(...)
+  -> EXTERN: (41,6) bind(int, const sockaddr *, socklen_t)
+  -> EXTERN: (45,6) listen(int, int)
+
+
+    Report from: Code generation optimizations [cg]
+
+server.cpp(37,2):remark #34000: call to bzero implemented inline with stores with proven (alignment, offset): (16, 0)
+===========================================================================
+
+Begin optimization report for: echo(int)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (echo(int)) [5/5=100.0%] server.cpp(53,1)
+  -> EXTERN: (58,2) Rio_readinitb(rio_t *, int)
+  -> EXTERN: (59,13) Rio_readlineb(rio_t *, void *, size_t)
+  -> EXTERN: (59,13) Rio_readlineb(rio_t *, void *, size_t)
+  -> EXTERN: (60,3) fprintf(FILE *, const char *, ...)
+  -> EXTERN: (61,3) Rio_written(int, void *, size_t)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at server.cpp(59,2)
+   remark #15521: loop was not vectorized: explicitly compute the iteration count before executing the loop or try using canonical loop form
+LOOP END
+===========================================================================

@@ -1,0 +1,113 @@
+
+    Report from: Interprocedural optimizations [ipo]
+
+  WHOLE PROGRAM (SAFE) [EITHER METHOD]: false
+  WHOLE PROGRAM (SEEN) [TABLE METHOD]: false
+  WHOLE PROGRAM (READ) [OBJECT READER METHOD]: false
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 30
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: disabled
+  -inline-max-per-compile: disabled
+
+In the inlining report below:
+   "sz" refers to the "size" of the routine. The smaller a routine's size,
+      the more likely it is to be inlined.
+   "isz" refers to the "inlined size" of the routine. This is the amount
+      the calling routine will grow if the called routine is inlined into it.
+      The compiler generally limits the amount a routine can grow by having
+      routines inlined into it.
+
+Begin optimization report for: Rio_read(rio_t *, char *, size_t)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (Rio_read(rio_t *, char *, size_t)) rio.cpp(12,1)
+
+===========================================================================
+
+Begin optimization report for: Rio_readnb(rio_t *, void *, size_t)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (Rio_readnb(rio_t *, void *, size_t)) [2/5=40.0%] rio.cpp(42,1)
+  -> INLINE: (48,15) Rio_read(rio_t *, char *, size_t) (isz = 58) (sz = 71)
+    -> EXTERN: (16,17) read(int, void *, size_t)
+    -> EXTERN: (18,7) __errno_location()
+    -> EXTERN: (34,2) memcpy(void *, const void *, size_t)
+  -> EXTERN: (49,7) __errno_location()
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at rio.cpp(15,8) inlined into rio.cpp(48,15)
+   remark #15521: loop was not vectorized: explicitly compute the iteration count before executing the loop or try using canonical loop form
+
+   LOOP BEGIN at rio.cpp(15,2) inlined into rio.cpp(48,15)
+      remark #15521: loop was not vectorized: explicitly compute the iteration count before executing the loop or try using canonical loop form
+   LOOP END
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+rio.cpp(34,2):remark #34014: optimization advice for memcpy: increase the destination's alignment to 16 (and use __assume_aligned) to speed up library implementation
+rio.cpp(34,2):remark #34014: optimization advice for memcpy: increase the source's alignment to 16 (and use __assume_aligned) to speed up library implementation
+rio.cpp(34,2):remark #34026: call to memcpy implemented as a call to optimized library version
+===========================================================================
+
+Begin optimization report for: Rio_readlineb(rio_t *, void *, size_t)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (Rio_readlineb(rio_t *, void *, size_t)) [3/5=60.0%] rio.cpp(63,1)
+  -> INLINE: (69,12) Rio_read(rio_t *, char *, size_t) (isz = 58) (sz = 71)
+    -> EXTERN: (16,17) read(int, void *, size_t)
+    -> EXTERN: (18,7) __errno_location()
+    -> EXTERN: (34,2) memcpy(void *, const void *, size_t)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at rio.cpp(68,2)
+   remark #15520: loop was not vectorized: loop with early exits cannot be vectorized unless it meets search loop idiom criteria
+
+   LOOP BEGIN at rio.cpp(15,2) inlined into rio.cpp(69,12)
+      remark #15521: loop was not vectorized: explicitly compute the iteration count before executing the loop or try using canonical loop form
+   LOOP END
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+rio.cpp(34,2):remark #34014: optimization advice for memcpy: increase the source's alignment to 16 (and use __assume_aligned) to speed up library implementation
+rio.cpp(34,2):remark #34026: call to memcpy implemented as a call to optimized library version
+===========================================================================
+
+Begin optimization report for: Rio_written(int, void *, size_t)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (Rio_written(int, void *, size_t)) [4/5=80.0%] rio.cpp(90,1)
+  -> EXTERN: (96,18) write(int, const void *, size_t)
+  -> EXTERN: (97,7) __errno_location()
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at rio.cpp(95,2)
+   remark #15521: loop was not vectorized: explicitly compute the iteration count before executing the loop or try using canonical loop form
+LOOP END
+===========================================================================
+
+Begin optimization report for: Rio_readinitb(rio_t *, int)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (Rio_readinitb(rio_t *, int)) [5/5=100.0%] rio.cpp(4,1)
+
+===========================================================================

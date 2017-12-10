@@ -1,0 +1,100 @@
+
+    Report from: Interprocedural optimizations [ipo]
+
+  WHOLE PROGRAM (SAFE) [EITHER METHOD]: false
+  WHOLE PROGRAM (SEEN) [TABLE METHOD]: false
+  WHOLE PROGRAM (READ) [OBJECT READER METHOD]: false
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 30
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: disabled
+  -inline-max-per-compile: disabled
+
+In the inlining report below:
+   "sz" refers to the "size" of the routine. The smaller a routine's size,
+      the more likely it is to be inlined.
+   "isz" refers to the "inlined size" of the routine. This is the amount
+      the calling routine will grow if the called routine is inlined into it.
+      The compiler generally limits the amount a routine can grow by having
+      routines inlined into it.
+
+Begin optimization report for: main(int, char **)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (main(int, char **)) [1/4=25.0%] client.cpp(49,1)
+  -> EXTERN: (51,3) fprintf(FILE *, const char *, ...)
+  -> INLINE (MANUAL): (55,13) atoi(const char *) (isz = 8) (sz = 15)
+    -> INLINE (MANUAL): /usr/include/stdlib.h:(404,16) strtol(const char *, char **, int) (isz = 3) (sz = 14)
+      -> EXTERN: (336,10) __strtol_internal(const char *, char **, int, int)
+  -> INLINE: (57,17) open_clientfd(char *, int) (isz = 61) (sz = 73)
+    -> EXTERN: (22,2) fprintf(FILE *, const char *, ...)
+    -> EXTERN: (23,18) socket(int, int, int)
+    -> EXTERN: (28,12) gethostbyname(const char *)
+    -> EXTERN: (31,2) bzero(void *, size_t)
+    -> EXTERN: (33,2) bcopy(const void *, void *, size_t)
+    -> EXTERN: (35,24) __builtin_constant_p(...)
+    -> EXTERN: (37,2) fprintf(FILE *, const char *, ...)
+    -> EXTERN: (39,6) connect(int, const sockaddr *, socklen_t)
+  -> EXTERN: (58,3) fprintf(FILE *, const char *, ...)
+  -> EXTERN: (61,2) fprintf(FILE *, const char *, ...)
+  -> EXTERN: (65,2) Rio_readinitb(rio_t *, int)
+  -> EXTERN: (67,9) fgets(char *, int, FILE *)
+  -> EXTERN: (67,9) fgets(char *, int, FILE *)
+  -> EXTERN: (68,3) Rio_written(int, void *, size_t)
+  -> EXTERN: (68,30) strlen(const char *)
+  -> EXTERN: (69,3) Rio_readlineb(rio_t *, void *, size_t)
+  -> EXTERN: (70,3) fputs(const char *, FILE *)
+  -> EXTERN: (72,2) close(int)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at client.cpp(67,2)
+   remark #15521: loop was not vectorized: explicitly compute the iteration count before executing the loop or try using canonical loop form
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+client.cpp(31,2):remark #34000: call to bzero implemented inline with stores with proven (alignment, offset): (16, 0)
+===========================================================================
+
+Begin optimization report for: strtol(const char *, char **, int)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (strtol(const char *, char **, int)) /usr/include/stdlib.h(335,1)
+
+===========================================================================
+
+Begin optimization report for: atoi(const char *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (atoi(const char *)) /usr/include/stdlib.h(403,1)
+
+===========================================================================
+
+Begin optimization report for: open_clientfd(char *, int)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (open_clientfd(char *, int)) [4/4=100.0%] client.cpp(17,1)
+  -> EXTERN: (22,2) fprintf(FILE *, const char *, ...)
+  -> EXTERN: (23,18) socket(int, int, int)
+  -> EXTERN: (28,12) gethostbyname(const char *)
+  -> EXTERN: (31,2) bzero(void *, size_t)
+  -> EXTERN: (33,2) bcopy(const void *, void *, size_t)
+  -> EXTERN: (35,24) __builtin_constant_p(...)
+  -> EXTERN: (37,2) fprintf(FILE *, const char *, ...)
+  -> EXTERN: (39,6) connect(int, const sockaddr *, socklen_t)
+
+
+    Report from: Code generation optimizations [cg]
+
+client.cpp(31,2):remark #34000: call to bzero implemented inline with stores with proven (alignment, offset): (16, 0)
+===========================================================================
